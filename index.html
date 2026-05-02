@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEATH CLASS — IMMERSIVE LAB × NASU UTOPIA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Inter", "Noto Sans JP", -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Hiragino Sans", sans-serif;
+    color: #1a1a1a;
+    background: #0a0a0a;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* Wireframe annotations — hidden in production view */
+  .wf-note, .wf-section-label { display: none; }
+  body.show-wireframe .wf-note {
+    display: block;
+    background: #fffbe6;
+    border-left: 4px solid #d4a017;
+    padding: 8px 14px;
+    font-size: 12px;
+    color: #6b5a00;
+  }
+  body.show-wireframe .wf-section-label {
+    display: block;
+    background: #222;
+    color: #fff;
+    padding: 6px 14px;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    font-weight: bold;
+  }
+  section {
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    padding: 80px 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  @media (max-width: 768px) {
+    section { padding: 48px 18px; }
+  }
+  .ph {
+    background: repeating-linear-gradient(45deg, #eee 0 10px, #e2e2e2 10px 20px);
+    border: 1px dashed #999;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 13px;
+    padding: 20px;
+  }
+  .ph.kv { aspect-ratio: 16 / 9; font-size: 16px; font-weight: bold; }
+  .ph.sq { aspect-ratio: 1 / 1; }
+  .ph.tall { aspect-ratio: 3 / 4; }
+  .ph.wide { aspect-ratio: 21 / 9; }
+  h1 { font-size: 32px; margin-bottom: 16px; font-weight: 900; letter-spacing: 0.02em; }
+  h2 {
+    font-size: clamp(22px, 2.6vw, 32px);
+    margin-bottom: 16px;
+    border-left: 4px solid #1a1a1a;
+    padding-left: 14px;
+    font-weight: 900;
+    letter-spacing: 0.02em;
+    line-height: 1.4;
+  }
+  h3 { font-size: 17px; margin-bottom: 10px; font-weight: 700; letter-spacing: 0.02em; }
+  p { margin-bottom: 10px; font-size: 15px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  @media (max-width: 768px) {
+    .grid-2 { grid-template-columns: 1fr; gap: 24px; }
+    .grid-3 { grid-template-columns: 1fr; gap: 12px; }
+  }
+  /* Section 2 specific: balance text + concept image */
+  .concept-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .concept-grid img {
+    width: 100%;
+    max-width: 420px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+    border-radius: 4px;
+  }
+  @media (max-width: 768px) {
+    .concept-grid { grid-template-columns: 1fr; gap: 24px; }
+  }
+  .red-card { background: #fff5f5; border-top: 4px solid #c8102e; border-bottom: 4px solid #c8102e; padding: 60px 32px; }
+  .blue-card { background: #f4f7ff; border-top: 4px solid #1d3a8a; border-bottom: 4px solid #1d3a8a; padding: 60px 32px; }
+  @media (max-width: 768px) {
+    .red-card, .blue-card { padding: 40px 18px; }
+  }
+  .red-card h3, .red-card .label { color: #c8102e; }
+  .blue-card h3, .blue-card .label { color: #1d3a8a; }
+  .label { font-size: 11px; letter-spacing: 0.2em; font-weight: bold; margin-bottom: 8px; }
+  .vs-mark {
+    text-align: center;
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 900;
+    margin: 24px 0;
+    letter-spacing: 0.05em;
+    color: #1a1a1a;
+    font-family: "Inter", sans-serif;
+  }
+  .btn {
+    display: inline-block; padding: 14px 32px; font-weight: 700;
+    border: 2px solid #1a1a1a; background: #fff; color: #1a1a1a;
+    margin-top: 12px; font-size: 14px; letter-spacing: 0.05em;
+    cursor: pointer; transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+    text-decoration: none;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
+  .btn-red { background: #c8102e; color: #fff; border-color: #c8102e; }
+  .btn-blue { background: #1d3a8a; color: #fff; border-color: #1d3a8a; }
+  table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 14px; }
+  th, td { border: 1px solid #e0e0e0; padding: 14px 16px; text-align: left; vertical-align: top; }
+  th { background: #f5f5f5; font-weight: 700; }
+  th.red-col { background: #fff0f0; color: #c8102e; font-weight: 700; }
+  th.blue-col { background: #f0f4ff; color: #1d3a8a; font-weight: 700; }
+  td:first-child { font-weight: 700; background: #fafafa; }
+  @media (max-width: 768px) { table { font-size: 12px; } th, td { padding: 10px 12px; } }
+  .vote-bar {
+    display: flex;
+    height: 64px;
+    margin: 20px 0;
+    border-radius: 4px;
+    overflow: hidden;
+    font-weight: 700;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  }
+  .vote-bar .red-fill {
+    background: linear-gradient(90deg, #c8102e 0%, #a00d24 100%);
+    color: #fff; flex: 52;
+    display: flex; align-items: center; padding: 0 20px;
+    letter-spacing: 0.05em;
+  }
+  .vote-bar .blue-fill {
+    background: linear-gradient(270deg, #1d3a8a 0%, #15296b 100%);
+    color: #fff; flex: 48;
+    display: flex; align-items: center; justify-content: flex-end; padding: 0 20px;
+    letter-spacing: 0.05em;
+  }
+  .vote-bar .red-fill, .vote-bar .blue-fill {
+    transition: flex 0.6s ease;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .vote-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 28px;
+  }
+  .vote-action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 16 / 9;
+    text-decoration: none;
+    color: #fff;
+    font-weight: 700;
+    border-radius: 4px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+  }
+  .vote-action:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.5); }
+  .vote-action.vote-red { background: linear-gradient(135deg, #c8102e 0%, #7a0517 100%); }
+  .vote-action.vote-blue { background: linear-gradient(135deg, #1d3a8a 0%, #0d1d50 100%); }
+  .vote-action-label { font-size: 13px; letter-spacing: 0.3em; opacity: 0.8; }
+  .vote-action-cta {
+    font-size: clamp(20px, 3vw, 32px);
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    margin-top: 12px;
+  }
+  @media (max-width: 768px) {
+    .vote-actions { grid-template-columns: 1fr; }
+  }
+  .nav {
+    background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: #fff;
+    padding: 14px 28px;
+    display: flex; justify-content: space-between; align-items: center;
+    position: sticky; top: 0; z-index: 100; font-size: 13px;
+    letter-spacing: 0.05em;
+  }
+  .nav ul { list-style: none; display: flex; gap: 24px; }
+  .nav a { color: #fff; text-decoration: none; transition: opacity 0.2s; }
+  .nav a:hover { opacity: 0.6; }
+  .nav .nav-cta {
+    background: #c8102e; padding: 8px 16px; font-weight: 700;
+    cursor: pointer; transition: background 0.2s;
+    font-size: 12px;
+  }
+  .nav .nav-cta:hover { background: #a00d24; }
+  @media (max-width: 768px) {
+    .nav ul { display: none; }
+  }
+  footer {
+    background: #0a0a0a; color: #888; padding: 60px 24px 40px;
+    text-align: center; font-size: 12px;
+    letter-spacing: 0.05em;
+  }
+  footer p strong { color: #fff; font-size: 18px; letter-spacing: 0.15em; font-weight: 900; }
+  .note-list { font-size: 14px; color: #444; margin-top: 12px; line-height: 1.9; }
+  .note-list li { margin-left: 22px; margin-bottom: 8px; }
+  .timeline { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .timeline > div {
+    flex: 1; min-width: 120px; padding: 12px;
+    border: 1px solid #ccc; font-size: 12px;
+  }
+  .sns-card {
+    border: 1px solid #ccc; padding: 16px; font-size: 13px;
+    background: #fafafa;
+  }
+  body { background: #fafafa; }
+  .kv-hero {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .kv-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+  .kv-hero.bg-a {
+    background-image: url('kv/hero_a_v3_red_gym.png');
+  }
+  .kv-hero.bg-a::before {
+    background: linear-gradient(180deg, rgba(40,0,0,0.55) 0%, rgba(0,0,0,0.40) 50%, rgba(0,0,0,0.75) 100%);
+  }
+  .kv-hero.bg-b {
+    background-image: url('kv/hero_b_v5_blue_gym.png');
+  }
+  .kv-hero.bg-b::before {
+    background: linear-gradient(180deg, rgba(0,10,40,0.55) 0%, rgba(0,0,0,0.40) 50%, rgba(0,0,0,0.75) 100%);
+  }
+  .kv-inner {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: #fff;
+    padding: 8% 6%;
+    max-width: 88%;
+  }
+  .kv-tag {
+    font-size: clamp(7px, 0.75vw, 10px);
+    letter-spacing: 0.3em;
+    margin-bottom: clamp(10px, 1.2vw, 16px);
+    opacity: 0.85;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .kv-title {
+    font-size: clamp(24px, 4vw, 52px);
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    line-height: 1;
+    margin: 0;
+    text-shadow: 0 2px 14px rgba(0,0,0,0.7);
+  }
+  .kv-sub {
+    font-size: clamp(10px, 1.1vw, 14px);
+    font-weight: 300;
+    letter-spacing: 0.5em;
+    margin: 8px 0 0;
+    opacity: 0.9;
+  }
+  .kv-line {
+    font-size: clamp(9px, 0.95vw, 12px);
+    letter-spacing: 0.18em;
+    margin-top: clamp(14px, 2vw, 22px);
+    opacity: 0.8;
+  }
+  .hero-fv {
+    position: relative;
+    width: 100%;
+    max-width: none;
+    margin: 0 0 24px 0;
+    padding: 0;
+    background: #000;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    background-image: url('kv/hero_main_split.png');
+    background-size: cover;
+    background-position: center;
+  }
+  .hero-fv::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.35) 45%, rgba(0,0,0,0.85) 100%);
+    z-index: 1;
+  }
+  .hero-fv .hero-inner {
+    position: absolute; inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    padding: 4% 6%;
+  }
+  .hero-fv .hero-tag {
+    font-size: clamp(8px, 0.8vw, 11px);
+    letter-spacing: 0.4em;
+    opacity: 0.85;
+    margin-bottom: clamp(10px, 1.4vw, 18px);
+    white-space: nowrap;
+  }
+  .hero-fv .hero-title {
+    font-size: clamp(32px, 5.5vw, 80px);
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    line-height: 1;
+    margin: 0;
+    text-shadow: 0 2px 18px rgba(0,0,0,0.7);
+  }
+  .hero-fv .hero-sub {
+    font-size: clamp(11px, 1.2vw, 16px);
+    letter-spacing: 0.2em;
+    opacity: 0.9;
+    margin-top: clamp(12px, 1.6vw, 18px);
+  }
+  .hero-fv .hero-q {
+    font-size: clamp(14px, 1.8vw, 22px);
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    margin-top: clamp(20px, 3vw, 36px);
+    text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+  }
+  .hero-fv .hero-vote-line {
+    font-size: clamp(10px, 1vw, 13px);
+    letter-spacing: 0.18em;
+    opacity: 0.85;
+    margin-top: clamp(6px, 0.8vw, 10px);
+  }
+  .hero-fv .hero-buttons {
+    margin-top: clamp(14px, 2vw, 22px);
+  }
+  .hero-fv .hero-buttons .btn {
+    margin: 4px;
+  }
+  .hero-fv .hero-meta {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    opacity: 0.7;
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+
+<!-- =========================================== -->
+<!-- 0. ナビゲーション -->
+<!-- =========================================== -->
+<div class="wf-section-label">SECTION 0 — グローバルナビ（sticky）</div>
+<div class="nav">
+  <strong>DEATH CLASS</strong>
+  <ul>
+    <li><a href="#hero">CONCEPT</a></li>
+    <li><a href="#a">完全デスゲーム</a></li>
+    <li><a href="#b">デスゲーム風物語没入</a></li>
+    <li><a href="#vs">２つの比較</a></li>
+    <li><a href="#vote">投票</a></li>
+    <li><a href="#schedule">日程</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <span class="nav-cta">投票する ▶</span>
+</div>
+
+<!-- =========================================== -->
+<!-- 1. ヒーロー -->
+<!-- =========================================== -->
+<div class="wf-section-label">SECTION 1 — HERO（ファーストビュー）</div>
+<div class="wf-note" style="max-width:1100px; margin:0 auto;">用途：「2案のうちどっちを実施するか、あなたの一票で決まる」を3秒で伝える。スクロール前に投票導線を見せる。</div>
+<section id="hero" class="hero-fv">
+  <div class="hero-inner">
+    <p class="hero-tag">IMMERSIVE LAB × NASU UTOPIA</p>
+    <h1 class="hero-title">DEATH CLASS</h1>
+    <p class="hero-sub">廃校で目覚める、1泊2日のデスゲーム。</p>
+    <p class="hero-q">どちらの DEATH CLASS で目覚めたい？</p>
+    <p class="hero-vote-line">あなたの一票で、開校が決まる。</p>
+    <div class="hero-buttons">
+      <a class="btn btn-red" data-vote="red" href="#vote">A案 SURVIVOR に投票</a>
+      <a class="btn btn-blue" data-vote="blue" href="#vote">B案 DRAMA に投票</a>
+    </div>
+    <p class="hero-meta">投票期間：2026年5月2日 〜 5月31日</p>
+  </div>
+</section>
+
+<!-- =========================================== -->
+<!-- 2. なぜVSするのか -->
+<!-- =========================================== -->
+<div class="wf-section-label">SECTION 2 — なぜ2案なのか（コンセプト導入）</div>
+<section>
+  <div class="wf-note">用途：投票の意味と本気度を伝える。「単なるアンケートではなく本当に開催する案を決めている」を明示。</div>
+  <h2>"画面の向こうのデスゲーム"、<br>あなたはどう体験したいですか？</h2>
+  <div class="concept-grid" style="margin-top:32px;">
+    <div>
+      <p style="font-size:16px; line-height:1.9;">ドラマや映画で観た"あのデスゲーム"を、実際に体験する1泊2日の宿泊型企画。</p>
+      <p style="font-size:16px; line-height:1.9; margin-top:14px;">見たかったのは <strong>「自分の能力で勝ち抜く緊張感」</strong> ですか？<br>それとも <strong>「物語の登場人物として生きる没入」</strong> ですか？</p>
+      <p style="font-size:16px; line-height:1.9; margin-top:14px;">私たちは2つの DEATH CLASS を用意しました。<strong>5月末までの投票で多かった案を開校します。ただし、どちらも100名以上に届かなければ、開催は見送りです。</strong></p>
+    </div>
+    <img src="kv/concept_tv_screen.png" alt="画面の向こうのデスゲーム">
+  </div>
+</section>
+
+<!-- =========================================== -->
+<!-- 3. A案 SURVIVOR（赤） -->
+<!-- =========================================== -->
+<div class="wf-section-label">SECTION 3 — A案 SURVIVOR / 赤陣営</div>
+<section id="a" class="red-card" style="border-radius:0;">
+  <div class="wf-note">用途：A案を"商品として成立した完成度"で見せる。Bを意識した対比構造で書く。</div>
+  <p class="label" style="margin-top:20px;">A案 / RED</p>
+  <h2 style="border-color:#c8102e; color:#c8102e;">DEATH CLASS / SURVIVOR</h2>
+  <p style="font-size:24px; font-weight:bold; margin:16px 0;">最後の机に、座っているのは誰だ。</p>
+
+  <div class="grid-2" style="margin-top:24px;">
+    <div class="kv-hero bg-a">
+      <div class="kv-inner">
+        <p class="kv-tag">IMMERSIVE LAB × NASU UTOPIA</p>
+        <h1 class="kv-title">DEATH CLASS</h1>
+        <p class="kv-sub">/ SURVIVOR</p>
+      </div>
+    </div>
+    <div>
+      <h3>コアアイデア</h3>
+      <p>ドラマで観てきた"あのデスゲーム"を、自分の能力で勝ち抜く。<br>知力・体力・心理戦の全競技を1泊2日でくぐり抜け、最後に教室に立っているのはたった一人。</p>
+      <h3 style="margin-top:16px;">主役</h3>
+      <p>プレイヤー本人。あなたの脳と体と判断。</p>
+      <h3 style="margin-top:16px;">体験の核</h3>
+      <p>競技 / 突破 / 勝敗 / 達成</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:32px;">こんな人に</h3>
+  <ul class="note-list">
+    <li>脱出ゲーム・謎解き・TRPG競技・eスポーツ層</li>
+    <li>勝負の緊張感と、勝った時の達成感を求める人</li>
+    <li>"自分の力試し"を観光化したい人</li>
+  </ul>
+
+  <div style="text-align:center; margin-top:32px;">
+    <p style="font-size:32px; font-weight:bold; color:#c8102e;">勝ち残れ。</p>
+    <a class="btn btn-red" data-vote="red" href="#">A案 SURVIVOR に投票する ▶</a>
+  </div>
+</section>
+
+<!-- =========================================== -->
+<!-- 4. VS マーク -->
+<!-- =========================================== -->
+<div class="wf-section-label">SECTION 4 — VS マーク（仕切り）</div>
+<section style="text-align:center; padding:60px 24px; background:transparent; border:none;">
+  <p class="vs-mark">VS</p>
+</section>
+
+<!-- =========================================== -->
+<!-- 5. B案 DRAMA（青） -->
+<!-- =========================================== -->
+<div class="wf-section-label">SECTION 5 — B案 DRAMA / 青陣営</div>
+<section id="b" class="blue-card" style="border-radius:0;">
+  <div class="wf-note">用途：A案と完全パラレル構造で書く。同じ見出し・同じ要素数を揃えることで比較を成立させる。</div>
+  <p class="label" style="margin-top:20px;">B案 / BLUE</p>
+  <h2 style="border-color:#1d3a8a; color:#1d3a8a;">DEATH CLASS / DRAMA</h2>
+  <p style="font-size:24px; font-weight:bold; margin:16px 0;">あなたは、誰を助けますか。</p>
+
+  <div class="grid-2" style="margin-top:24px;">
+    <div>
+      <h3>コアアイデア</h3>
+      <p>ドラマで観てきた"あの世界"の登場人物として、2日間を生きる。<br>役柄・関係性・秘密。観客ではなく主役の一人として、誰を助け、誰を裏切るかを選ぶ物語没入体験。</p>
+      <h3 style="margin-top:16px;">主役</h3>
+      <p>あなたが演じるキャラクター。事前に渡される名前・背景・隠し情報。</p>
+      <h3 style="margin-top:16px;">体験の核</h3>
+      <p>役 / 選択 / 関係性 / 物語</p>
+    </div>
+    <div class="kv-hero bg-b">
+      <div class="kv-inner">
+        <p class="kv-tag">IMMERSIVE LAB × NASU UTOPIA</p>
+        <h1 class="kv-title">DEATH CLASS</h1>
+        <p class="kv-sub">/ DRAMA</p>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:32px;">こんな人に</h3>
+  <ul class="note-list">
+    <li>マダミス・TRPG・観劇・没入演劇・推し活層</li>
+    <li>勝敗より、関係性と選択の余韻を求める人</li>
+    <li>「自分が選んだ物語」をSNSで語りたい人</li>
+  </ul>
+
+  <div style="text-align:center; margin-top:32px;">
+    <p style="font-size:32px; font-weight:bold; color:#1d3a8a;">演じきれ。</p>
+    <a class="btn btn-blue" data-vote="blue" href="#">B案 DRAMA に投票する ▶</a>
+  </div>
+</section>
+
+<!-- =========================================== -->
+<!-- 6. VS 比較表 -->
+<!-- =========================================== -->
+<div class="wf-section-label">SECTION 6 — VS 比較表（全要素を1テーブルで対比）</div>
+<section id="vs">
+  <div class="wf-note">用途：迷ってる人に最後の一押し。横並び表で要素ごとに「あなたはどっち派？」を可視化する。</div>
+  <h2 style="margin-top:20px;">2つの DEATH CLASS、何が違うのか。</h2>
+  <table>
+    <tr>
+      <th style="width:18%;">軸</th>
+      <th class="red-col">A案 SURVIVOR / 赤</th>
+      <th class="blue-col">B案 DRAMA / 青</th>
+    </tr>
+    <tr><td>主役</td><td>プレイヤー本人</td><td>演じるキャラクター</td></tr>
+    <tr><td>価値</td><td>競技 / 勝敗 / 突破</td><td>物語 / 選択 / 関係</td></tr>
+    <tr><td>終わり方</td><td>勝者一人</td><td>分岐エンディング複数</td></tr>
+  </table>
+</section>
+
+<!-- =========================================== -->
+<!-- 7. 投票セクション（メインCV） -->
+<!-- =========================================== -->
+<div class="wf-section-label">SECTION 7 — VOTE（メインCV）</div>
+<section id="vote" style="background:#111; color:#fff; max-width:none; margin:0;">
+  <div class="wf-note" style="background:#fffbe6;">用途：このページで一番太い導線。リアルタイム投票数バー＋SNSシェア＋メアド登録の3点セット。</div>
+  <div style="max-width:1100px; margin:40px auto 0;">
+    <h2 style="border-color:#fff; color:#fff;">あなたの一票が、最初の開校を決める。</h2>
+    <p style="margin-top:12px;">
+      投票期間：〜 2026年5月31日<br>
+      決定条件：投票が多かった案を開校。ただし、両案とも100名以上の票が集まることが条件です。<br>
+      条件未達の場合は、今回の開校は見送りとなります。
+    </p>
+
+    <div class="vote-bar" id="vote-bar">
+      <div class="red-fill" id="bar-red">SURVIVOR / 赤 &nbsp;&nbsp; - %</div>
+      <div class="blue-fill" id="bar-blue">- % &nbsp;&nbsp; DRAMA / 青</div>
+    </div>
+    <p style="font-size:12px; color:#aaa; margin-top:6px; letter-spacing:0.05em;">※ 集計はリアルタイム更新（最大30秒のラグ）</p>
+
+    <div class="vote-actions">
+      <a class="vote-action vote-red" data-vote="red" href="#">
+        <span class="vote-action-label">A案 / SURVIVOR</span>
+        <span class="vote-action-cta">赤に投票する ▶</span>
+      </a>
+      <a class="vote-action vote-blue" data-vote="blue" href="#">
+        <span class="vote-action-label">B案 / DRAMA</span>
+        <span class="vote-action-cta">青に投票する ▶</span>
+      </a>
+    </div>
+
+    <div style="margin-top:24px; padding:24px; background:#1a1a1a; border:1px solid #333;">
+      <p style="color:#fff; font-weight:bold; font-size:15px; line-height:1.9;">
+        ・5月末までの投票で多い方を開校<br>
+        ・ただし両案とも100名以上の得票が必要<br>
+        ・条件未達なら、今回は両案とも開校見送り
+      </p>
+      <p style="color:#aaa; font-size:13px; margin-top:14px; letter-spacing:0.05em;">真剣勝負としてあなたの一票を投じてください。</p>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================== -->
+<!-- 8. 共通情報（会場・アクセス） -->
+<!-- =========================================== -->
+<div class="wf-section-label">SECTION 8 — VENUE（共通情報）</div>
+<section id="schedule">
+  <div class="wf-note">用途：どちらが勝っても確定している情報。投票の本気度を裏付ける。出典：nasu-utopia.jp</div>
+  <h2 style="margin-top:20px;">会場・アクセス</h2>
+  <div class="grid-2" style="margin-top:20px;">
+    <div>
+      <img src="venue/venue_exterior_day.jpg" alt="那須ユートピア外観（昼）" style="width:100%; height:auto; border:1px solid #ccc;">
+      <p style="font-size:11px; color:#888; margin-top:4px;">© NASU UTOPIA / 公式サイトより</p>
+    </div>
+    <div>
+      <h3>会場</h3>
+      <p><strong>那須ユートピア（NASU UTOPIA）</strong><br>
+         旧美野沢小学校をリノベーションした体験型施設<br>
+         〒329-3437　栃木県那須町簔沢563-4</p>
+      <p style="font-size:13px; margin-top:8px;">
+        <a href="https://goo.gl/maps/7KA6RZqo8Ua6miJS7" target="_blank">Google Maps で開く ▶</a> ／
+        <a href="https://nasu-utopia.jp/" target="_blank">公式サイト ▶</a>
+      </p>
+
+      <h3 style="margin-top:20px;">アクセス</h3>
+      <p style="font-size:14px;">
+        <strong>お車</strong><br>
+        ・東北自動車道「那須IC」より約35分<br>
+        ・東北自動車道「那須高原SAスマートIC」より約25分<br>
+        <br>
+        <strong>新幹線</strong><br>
+        ・東北新幹線「那須塩原駅」より車で約30分<br>
+        <br>
+        <strong>在来線・バス</strong><br>
+        ・JR宇都宮線「黒磯駅」より車で約25分<br>
+        ・JR「黒磯駅」よりバス（追分・黒磯線）約47分
+      </p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:32px;">施設について</h3>
+  <p style="font-size:14px;">
+    廃校となった旧美野沢小学校をリノベーションし、教室ルーム・グランピングヴィラ・コンクリートサウナ「CUBERU」・ハンドメイドサウナ「Rekka」・地産地消BBQ・ナイトミュージアム等を備える、宿泊型の総合体験施設。<br>
+    DEATH CLASS は、この"本物の廃校"の空間そのものを舞台に開校します。
+  </p>
+
+  <div class="grid-3" style="margin-top:20px;">
+    <img src="venue/venue_exterior_night.jpg" alt="夜の校舎外観" style="width:100%; height:100%; object-fit:cover; border:1px solid #ccc;">
+    <img src="venue/venue_classroom_lounge.jpg" alt="教室ラウンジ" style="width:100%; height:100%; object-fit:cover; border:1px solid #ccc;">
+    <img src="venue/venue_sauna.jpg" alt="サウナデッキ" style="width:100%; height:100%; object-fit:cover; border:1px solid #ccc;">
+  </div>
+</section>
+
+<!-- =========================================== -->
+<!-- 9. FAQ -->
+<!-- =========================================== -->
+<div class="wf-section-label">SECTION 9 — FAQ</div>
+<section id="faq">
+  <div class="wf-note">用途：投票のハードルを下げる。真剣勝負であることを明確に伝える。</div>
+  <h2 style="margin-top:20px;">よくある質問</h2>
+  <ul class="note-list" style="font-size:14px;">
+    <li><strong>Q. 投票期間と決定条件は？</strong><br>A. 投票期間は〜2026年5月31日。投票が多かった案を開校します。ただし、両案とも100名以上の得票がなければ、今回はどちらも開催見送りです。</li>
+    <li><strong>Q. 投票は本当に開催決定に反映されますか？</strong><br>A. はい。条件を満たせば、得票上位の案をそのまま正式実施します。真剣勝負としてあなたの一票を投じてください。</li>
+    <li><strong>Q. 負けた案も後日やりますか？</strong><br>A. 今回は見送りです。次回以降の企画は未定です。</li>
+    <li><strong>Q. どちらにも投票できますか？</strong><br>A. お一人一票です。陣営を選んでください。</li>
+  </ul>
+</section>
+
+<!-- =========================================== -->
+<!-- 投票連携スクリプト -->
+<!-- =========================================== -->
+<script>
+  // ============================================================
+  // 投票連携の設定値（Google Form / GAS デプロイ後に差し替え）
+  // ============================================================
+  const VOTE_CONFIG = {
+    // 赤陣営プリフィルURL（Google Forms「事前入力したURLを取得」で発行）
+    FORM_RED:  "https://docs.google.com/forms/d/e/1FAIpQLScuZk7K0erYGoWaYhp9JWHtciopIPpyqVdyNdh2SXf3ZkkCGA/viewform?usp=pp_url&entry.2097646513=%E8%B5%A4",
+    // 青陣営プリフィルURL
+    FORM_BLUE: "https://docs.google.com/forms/d/e/1FAIpQLScuZk7K0erYGoWaYhp9JWHtciopIPpyqVdyNdh2SXf3ZkkCGA/viewform?usp=pp_url&entry.2097646513=%E9%9D%92",
+    // 集計API（GAS Web App デプロイ後のURL）
+    COUNT_API: "https://script.google.com/macros/s/AKfycby7hka57jT8XBn5aCR5ROw31Xbg_SEI4x1pe1Bkl0i9p-QYYHQJx1j5OzaoHELgEk3pxg/exec",
+    // 集計の自動更新間隔（ミリ秒）
+    POLL_MS: 30000,
+  };
+
+  // ============================================================
+  // 投票ボタンのクリック → Google Form を新タブで開く
+  // ============================================================
+  document.querySelectorAll("[data-vote]").forEach((el) => {
+    el.addEventListener("click", (e) => {
+      e.preventDefault();
+      const faction = el.dataset.vote;
+      const url = faction === "red" ? VOTE_CONFIG.FORM_RED : VOTE_CONFIG.FORM_BLUE;
+      if (!url || url.startsWith("__REPLACE")) {
+        alert("投票フォームのURLが未設定です（管理者設定中）");
+        return;
+      }
+      window.open(url, "_blank", "noopener");
+    });
+  });
+
+  // ============================================================
+  // 集計バー：ページロード時 + 一定間隔で更新
+  // ============================================================
+  async function refreshVoteCounts() {
+    if (!VOTE_CONFIG.COUNT_API || VOTE_CONFIG.COUNT_API.startsWith("__REPLACE")) return;
+    try {
+      const res = await fetch(VOTE_CONFIG.COUNT_API, { method: "GET" });
+      if (!res.ok) return;
+      const { red, blue } = await res.json();
+      const total = (red || 0) + (blue || 0);
+      const redPct  = total ? Math.round((red  / total) * 100) : 50;
+      const bluePct = total ? Math.round((blue / total) * 100) : 50;
+      const barRed  = document.getElementById("bar-red");
+      const barBlue = document.getElementById("bar-blue");
+      if (barRed && barBlue) {
+        barRed.style.flex  = String(red  || 0.5);
+        barBlue.style.flex = String(blue || 0.5);
+        barRed.textContent  = `SURVIVOR / 赤  ${redPct}% (${red}票)`;
+        barBlue.textContent = `(${blue}票) ${bluePct}%  DRAMA / 青`;
+      }
+    } catch (err) {
+      console.warn("[vote] 集計取得に失敗:", err);
+    }
+  }
+  refreshVoteCounts();
+  setInterval(refreshVoteCounts, VOTE_CONFIG.POLL_MS);
+</script>
+
+<!-- =========================================== -->
+<!-- 10. フッター -->
+<!-- =========================================== -->
+<div class="wf-section-label">SECTION 10 — FOOTER</div>
+<footer>
+  <p><strong>DEATH CLASS</strong></p>
+  <p style="margin-top:8px;">IMMERSIVE LAB × NASU UTOPIA</p>
+  <p style="margin-top:16px;">
+    <a href="https://x.com/ImmersiveLabinc" target="_blank" rel="noopener" style="color:#aaa; text-decoration:none; margin:0 12px;">X</a>
+    <a href="https://immersivelab.jp/contact" target="_blank" rel="noopener" style="color:#aaa; text-decoration:none; margin:0 12px;">お問い合わせ</a>
+    <a href="https://immersivelab.jp/" target="_blank" rel="noopener" style="color:#aaa; text-decoration:none; margin:0 12px;">Immersive Lab</a>
+  </p>
+  <p style="margin-top:24px; font-size:11px;">© 2026 Immersive Lab Inc.</p>
+</footer>
+
+
+</body>
+</html>
