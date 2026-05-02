@@ -370,6 +370,64 @@
     opacity: 0.7;
     margin-top: 10px;
   }
+  /* Mobile: 16:9 だとFVに収まりきらないので縦に伸ばす */
+  @media (max-width: 768px) {
+    .hero-fv {
+      aspect-ratio: auto;
+      min-height: calc(100svh - 56px);
+      background-position: center 30%;
+    }
+    .hero-fv .hero-inner {
+      padding: 56px 20px;
+      justify-content: center;
+    }
+    .hero-fv .hero-tag {
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      margin-bottom: 16px;
+    }
+    .hero-fv .hero-title {
+      font-size: clamp(40px, 13vw, 64px);
+    }
+    .hero-fv .hero-sub {
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      line-height: 1.7;
+      margin-top: 14px;
+    }
+    .hero-fv .hero-q {
+      font-size: 16px;
+      letter-spacing: 0.08em;
+      margin-top: 28px;
+      line-height: 1.5;
+    }
+    .hero-fv .hero-vote-line {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      margin-top: 8px;
+    }
+    .hero-fv .hero-buttons {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+      margin-top: 22px;
+      width: 100%;
+      max-width: 320px;
+    }
+    .hero-fv .hero-buttons .btn {
+      width: 100%;
+      margin: 0;
+      padding: 16px 20px;
+      font-size: 14px;
+    }
+    .hero-fv .hero-meta {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      margin-top: 16px;
+      line-height: 1.6;
+    }
+  }
 </style>
 </head>
 <body>
