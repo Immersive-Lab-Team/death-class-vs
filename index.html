@@ -261,15 +261,15 @@
      ============================================================ */
   .loading-overlay {
     position: fixed; inset: 0; z-index: 9999;
-    background-color: #1a2622;
+    background-color: #000;
     background-image:
-      radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.04) 0%, transparent 60%),
-      repeating-linear-gradient(0deg, rgba(255,255,255,0.015) 0 1px, transparent 1px 3px),
-      repeating-linear-gradient(90deg, rgba(255,255,255,0.012) 0 1px, transparent 1px 4px);
+      radial-gradient(ellipse at 50% 50%, rgba(120,0,0,0.18) 0%, transparent 65%),
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0 1px, transparent 1px 3px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.010) 0 1px, transparent 1px 4px);
     display: flex; align-items: center; justify-content: center;
     cursor: pointer;
     overflow: hidden;
-    animation: loading-fade-out 0.4s 2.4s forwards;
+    animation: loading-fade-out 0.4s 3.4s forwards;
   }
   .loading-overlay.skipped { animation: loading-fade-out 0.2s forwards; }
 
@@ -289,11 +289,12 @@
     font-family: "Klee One", "Shippori Mincho B1", serif;
     font-weight: 600;
     font-size: clamp(80px, 18vw, 160px);
-    color: #f0efe5;
+    color: #b3001b;
     text-shadow:
-      0 0 2px rgba(240,239,229,0.5),
-      1px 0 0 rgba(255,255,255,0.15),
-      0 1px 0 rgba(0,0,0,0.3);
+      0 0 6px rgba(200,16,46,0.55),
+      0 0 18px rgba(120,0,0,0.4),
+      1px 0 0 rgba(255,30,60,0.2),
+      0 1px 0 rgba(0,0,0,0.5);
     letter-spacing: 0.03em;
     opacity: 0;
     clip-path: inset(0 100% 0 0);
@@ -328,16 +329,17 @@
   @keyframes loading-x-show { 100% { opacity: 1; } }
   .loading-x svg { width: 100%; height: 100%; }
   .loading-x line {
-    stroke: #f0efe5;
-    stroke-width: 7;
+    stroke: #c8102e;
+    stroke-width: 8;
     stroke-linecap: round;
     fill: none;
-    filter: drop-shadow(0 0 2px rgba(240,239,229,0.5));
+    filter: drop-shadow(0 0 6px rgba(200,16,46,0.7))
+            drop-shadow(0 0 16px rgba(120,0,0,0.5));
     stroke-dasharray: 200;
     stroke-dashoffset: 200;
   }
-  .loading-x .x-line-1 { animation: x-draw 0.18s 1.92s cubic-bezier(0.7, 0, 0.3, 1) forwards; }
-  .loading-x .x-line-2 { animation: x-draw 0.18s 2.12s cubic-bezier(0.7, 0, 0.3, 1) forwards; }
+  .loading-x .x-line-1 { animation: x-draw 0.22s 1.92s cubic-bezier(0.7, 0, 0.3, 1) forwards; }
+  .loading-x .x-line-2 { animation: x-draw 0.22s 2.18s cubic-bezier(0.7, 0, 0.3, 1) forwards; }
   @keyframes x-draw { to { stroke-dashoffset: 0; } }
 
   /* 黒板の上から赤と青の幕が降りる → 左右に剥がれて消える */
@@ -349,11 +351,11 @@
   }
   .loading-split .split-red {
     background: linear-gradient(135deg, #c8102e 0%, #5a0512 100%);
-    animation: split-show 0.05s 2.3s forwards, split-out-left 0.35s 2.35s cubic-bezier(0.7, 0, 0.4, 1) forwards;
+    animation: split-show 0.08s 3.0s forwards, split-out-left 0.4s 3.08s cubic-bezier(0.7, 0, 0.4, 1) forwards;
   }
   .loading-split .split-blue {
     background: linear-gradient(225deg, #1d3a8a 0%, #0a1a4a 100%);
-    animation: split-show 0.05s 2.3s forwards, split-out-right 0.35s 2.35s cubic-bezier(0.7, 0, 0.4, 1) forwards;
+    animation: split-show 0.08s 3.0s forwards, split-out-right 0.4s 3.08s cubic-bezier(0.7, 0, 0.4, 1) forwards;
   }
   @keyframes split-show { to { opacity: 1; } }
   @keyframes split-out-left  { to { transform: translateX(-101%); } }
@@ -660,8 +662,8 @@
 <div class="wf-section-label">SECTION 3 — A案 SURVIVOR / 赤陣営</div>
 <section id="a" class="red-card" style="border-radius:0;">
   <div class="wf-note">用途：A案を"商品として成立した完成度"で見せる。Bを意識した対比構造で書く。</div>
-  <p class="label" style="margin-top:20px;">A案 / RED</p>
-  <h2 style="border-color:#c8102e; color:#c8102e;">DEATH CLASS / SURVIVOR</h2>
+  <p class="label" style="margin-top:20px;">A案 / 赤</p>
+  <h2 style="border-color:#c8102e; color:#c8102e;">DEATH CLASS ／ サバイバルゲーム</h2>
   <p style="font-size:24px; font-weight:bold; margin:16px 0;">最後までこの教室に生き残れるのは誰だ。</p>
 
   <div class="grid-2" style="margin-top:24px;">
@@ -691,7 +693,7 @@
 
   <div style="text-align:center; margin-top:32px;">
     <p style="font-size:32px; font-weight:bold; color:#c8102e;">勝ち残れ。</p>
-    <a class="btn btn-red" data-vote="red" href="#">A案 SURVIVOR に投票する ▶</a>
+    <a class="btn btn-red" data-vote="red" href="#">A案 サバイバルゲームに投票 ▶</a>
   </div>
 </section>
 
@@ -709,8 +711,8 @@
 <div class="wf-section-label">SECTION 5 — B案 DRAMA / 青陣営</div>
 <section id="b" class="blue-card" style="border-radius:0;">
   <div class="wf-note">用途：A案と完全パラレル構造で書く。同じ見出し・同じ要素数を揃えることで比較を成立させる。</div>
-  <p class="label" style="margin-top:20px;">B案 / BLUE</p>
-  <h2 style="border-color:#1d3a8a; color:#1d3a8a;">DEATH CLASS / DRAMA</h2>
+  <p class="label" style="margin-top:20px;">B案 / 青</p>
+  <h2 style="border-color:#1d3a8a; color:#1d3a8a;">DEATH CLASS ／ 物語没入体験</h2>
   <p style="font-size:24px; font-weight:bold; margin:16px 0;">あなたは、誰を助けますか。</p>
 
   <div class="grid-2" style="margin-top:24px;">
@@ -740,7 +742,7 @@
 
   <div style="text-align:center; margin-top:32px;">
     <p style="font-size:32px; font-weight:bold; color:#1d3a8a;">演じきれ。</p>
-    <a class="btn btn-blue" data-vote="blue" href="#">B案 DRAMA に投票する ▶</a>
+    <a class="btn btn-blue" data-vote="blue" href="#">B案 物語没入体験に投票 ▶</a>
   </div>
 </section>
 
@@ -754,8 +756,8 @@
   <table>
     <tr>
       <th style="width:18%;">軸</th>
-      <th class="red-col">A案 SURVIVOR / 赤</th>
-      <th class="blue-col">B案 DRAMA / 青</th>
+      <th class="red-col">A案 サバイバルゲーム ／ 赤</th>
+      <th class="blue-col">B案 物語没入体験 ／ 青</th>
     </tr>
     <tr><td>主役</td><td>プレイヤー本人</td><td>演じるキャラクター</td></tr>
     <tr><td>価値</td><td>競技 / 勝敗 / 突破</td><td>物語 / 選択 / 関係</td></tr>
@@ -778,18 +780,18 @@
     </p>
 
     <div class="vote-bar" id="vote-bar">
-      <div class="red-fill" id="bar-red">SURVIVOR / 赤 &nbsp;&nbsp; - %</div>
-      <div class="blue-fill" id="bar-blue">- % &nbsp;&nbsp; DRAMA / 青</div>
+      <div class="red-fill" id="bar-red">サバイバル ／ 赤 &nbsp;&nbsp; - %</div>
+      <div class="blue-fill" id="bar-blue">- % &nbsp;&nbsp; 物語没入 ／ 青</div>
     </div>
     <p style="font-size:12px; color:#aaa; margin-top:6px; letter-spacing:0.05em;">※ 集計はリアルタイム更新（最大30秒のラグ）</p>
 
     <div class="vote-actions">
       <a class="vote-action vote-red" data-vote="red" href="#">
-        <span class="vote-action-label">A案 / SURVIVOR</span>
+        <span class="vote-action-label">A案 / サバイバルゲーム</span>
         <span class="vote-action-cta">赤に投票する ▶</span>
       </a>
       <a class="vote-action vote-blue" data-vote="blue" href="#">
-        <span class="vote-action-label">B案 / DRAMA</span>
+        <span class="vote-action-label">B案 / 物語没入体験</span>
         <span class="vote-action-cta">青に投票する ▶</span>
       </a>
     </div>
@@ -922,8 +924,8 @@
       if (barRed && barBlue) {
         barRed.style.flex  = String(red  || 0.5);
         barBlue.style.flex = String(blue || 0.5);
-        barRed.textContent  = `SURVIVOR / 赤  ${redPct}% (${red}票)`;
-        barBlue.textContent = `(${blue}票) ${bluePct}%  DRAMA / 青`;
+        barRed.textContent  = `サバイバル ／ 赤  ${redPct}% (${red}票)`;
+        barBlue.textContent = `(${blue}票) ${bluePct}%  物語没入 ／ 青`;
       }
     } catch (err) {
       console.warn("[vote] 集計取得に失敗:", err);
@@ -959,10 +961,10 @@
     // アニメ完了でスクロール解放＆DOMから削除
     setTimeout(() => {
       document.body.classList.remove("loading-active");
-    }, 2500);
+    }, 3500);
     setTimeout(() => {
       loader.remove();
-    }, 3200);
+    }, 4200);
   })();
 </script>
 
