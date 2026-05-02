@@ -233,8 +233,70 @@
     font-size: 12px;
   }
   .nav .nav-cta:hover { background: #a00d24; }
+
+  /* ハンバーガーボタン（モバイル時のみ表示） */
+  .nav-hamburger {
+    display: none;
+    background: transparent; border: none; cursor: pointer;
+    width: 36px; height: 36px;
+    flex-direction: column; justify-content: center; align-items: center;
+    gap: 5px; padding: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .nav-hamburger span {
+    display: block; width: 22px; height: 2px;
+    background: #fff; transition: transform 0.3s, opacity 0.2s;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* モバイル用フルスクリーンメニュー */
+  .nav-mobile-menu {
+    position: fixed; top: 0; right: 0; bottom: 0; left: 0;
+    background: rgba(0,0,0,0.97);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 99;
+    padding: 96px 28px 40px;
+    transform: translateX(100%);
+    transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+    visibility: hidden;
+    display: flex; flex-direction: column;
+  }
+  .nav-mobile-menu.open { transform: translateX(0); visibility: visible; }
+  .nav-mobile-menu ul {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .nav-mobile-menu li a {
+    display: block;
+    color: #fff; text-decoration: none;
+    font-family: "Cinzel", "Shippori Mincho B1", serif;
+    font-size: 17px; letter-spacing: 0.12em;
+    padding: 14px 4px;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    transition: opacity 0.2s, padding-left 0.2s;
+  }
+  .nav-mobile-menu li a:hover { opacity: 0.65; padding-left: 8px; }
+  .nav-mobile-menu .mobile-cta {
+    display: block;
+    margin-top: 28px;
+    background: #c8102e; color: #fff;
+    padding: 18px 24px; text-align: center;
+    text-decoration: none;
+    font-family: "Shippori Mincho B1", serif;
+    font-weight: 700; letter-spacing: 0.15em;
+    border: none;
+  }
+
   @media (max-width: 768px) {
     .nav ul { display: none; }
+    .nav .nav-cta { display: none; }
+    .nav-hamburger { display: flex; }
+  }
+  @media (min-width: 769px) {
+    .nav-mobile-menu { display: none !important; }
   }
   footer {
     background: #0a0a0a; color: #888; padding: 60px 24px 40px;
@@ -974,6 +1036,28 @@
     setTimeout(() => {
       loader.remove();
     }, 4200);
+  })();
+
+  // ============================================================
+  // モバイルハンバーガーメニューの開閉
+  // ============================================================
+  (function () {
+    const hamburger = document.querySelector(".nav-hamburger");
+    const menu = document.getElementById("mobile-menu");
+    if (!hamburger || !menu) return;
+    const setOpen = (open) => {
+      hamburger.classList.toggle("open", open);
+      menu.classList.toggle("open", open);
+      hamburger.setAttribute("aria-expanded", String(open));
+      menu.setAttribute("aria-hidden", String(!open));
+      document.body.style.overflow = open ? "hidden" : "";
+    };
+    hamburger.addEventListener("click", () => {
+      setOpen(!menu.classList.contains("open"));
+    });
+    menu.querySelectorAll("a").forEach((a) => {
+      a.addEventListener("click", () => setOpen(false));
+    });
   })();
 </script>
 
