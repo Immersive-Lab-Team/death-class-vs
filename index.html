@@ -328,18 +328,22 @@
   }
   @keyframes loading-x-show { 100% { opacity: 1; } }
   .loading-x svg { width: 100%; height: 100%; }
-  .loading-x line {
-    stroke: #c8102e;
-    stroke-width: 8;
+  .loading-x path {
+    stroke: #b3001b;
+    stroke-width: 9;
     stroke-linecap: round;
+    stroke-linejoin: round;
     fill: none;
-    filter: drop-shadow(0 0 6px rgba(200,16,46,0.7))
-            drop-shadow(0 0 16px rgba(120,0,0,0.5));
-    stroke-dasharray: 200;
-    stroke-dashoffset: 200;
+    stroke-dasharray: 220;
+    stroke-dashoffset: 220;
   }
-  .loading-x .x-line-1 { animation: x-draw 0.22s 1.92s cubic-bezier(0.7, 0, 0.3, 1) forwards; }
-  .loading-x .x-line-2 { animation: x-draw 0.22s 2.18s cubic-bezier(0.7, 0, 0.3, 1) forwards; }
+  /* 筆のかすれ感のためのドロップシャドウは外側のSVGに */
+  .loading-x svg {
+    filter: drop-shadow(0 0 5px rgba(200,16,46,0.55))
+            drop-shadow(0 0 18px rgba(120,0,0,0.45));
+  }
+  .loading-x .x-line-1 { animation: x-draw 0.32s 1.92s cubic-bezier(0.55, 0.05, 0.5, 1) forwards; }
+  .loading-x .x-line-2 { animation: x-draw 0.32s 2.28s cubic-bezier(0.55, 0.05, 0.5, 1) forwards; }
   @keyframes x-draw { to { stroke-dashoffset: 0; } }
 
   /* 黒板の上から赤と青の幕が降りる → 左右に剥がれて消える */
@@ -591,8 +595,22 @@
   </div>
   <div class="loading-x">
     <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
-      <line class="x-line-1" x1="22" y1="22" x2="78" y2="78"/>
-      <line class="x-line-2" x1="78" y1="22" x2="22" y2="78"/>
+      <defs>
+        <filter id="brush-rough" x="-12%" y="-12%" width="124%" height="124%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.55" numOctaves="2" seed="7"/>
+          <feDisplacementMap in="SourceGraphic" scale="3.2"/>
+        </filter>
+        <filter id="brush-rough-2" x="-12%" y="-12%" width="124%" height="124%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="2" seed="13"/>
+          <feDisplacementMap in="SourceGraphic" scale="3.5"/>
+        </filter>
+      </defs>
+      <path class="x-line-1"
+            d="M 20 22 C 32 30, 58 60, 80 78"
+            filter="url(#brush-rough)" />
+      <path class="x-line-2"
+            d="M 80 22 C 68 32, 42 58, 20 80"
+            filter="url(#brush-rough-2)" />
     </svg>
   </div>
   <div class="loading-split">
@@ -941,16 +959,7 @@
     const loader = document.getElementById("loading");
     if (!loader) return;
 
-    // セッション内（同タブ）の再表示はスキップ。タブを開き直したら再度表示
-    const SKIP_KEY = "deathclass_loading_seen";
-    try {
-      if (sessionStorage.getItem(SKIP_KEY)) {
-        loader.style.display = "none";
-        return;
-      }
-      sessionStorage.setItem(SKIP_KEY, "1");
-    } catch (e) { /* sessionStorage 不可環境は無視 */ }
-
+    // 毎回見せる演出。リロード時も常に表示。
     document.body.classList.add("loading-active");
 
     // タップ・クリックで即スキップ
