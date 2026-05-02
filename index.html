@@ -122,6 +122,8 @@
   .blue-card { background: #f4f7ff; border-top: 4px solid #1d3a8a; border-bottom: 4px solid #1d3a8a; padding: 60px 32px; }
   @media (max-width: 768px) {
     .red-card, .blue-card { padding: 40px 18px; }
+    /* B案：スマホ時はKVを「あなたは、誰を助けますか。」直後に表示 */
+    .blue-card .grid-2 .kv-hero { order: -1; margin-bottom: 8px; }
   }
   .red-card h3, .red-card .label { color: #c8102e; }
   .blue-card h3, .blue-card .label { color: #1d3a8a; }
