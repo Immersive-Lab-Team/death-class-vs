@@ -6,7 +6,7 @@
 <title>DEATH CLASS — IMMERSIVE LAB × NASU UTOPIA</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Noto+Serif+JP:wght@400;500;700;900&family=Shippori+Mincho+B1:wght@400;500;700;800&family=Shippori+Mincho:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Klee+One:wght@600&family=Noto+Serif+JP:wght@400;500;700;900&family=Shippori+Mincho+B1:wght@400;500;700;800&family=Shippori+Mincho:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -255,6 +255,116 @@
     background: #fafafa;
   }
   body { background: #fafafa; }
+
+  /* ============================================================
+     ローディング演出（黒板チョーク → 番号呼出 → × → 赤青分割）
+     ============================================================ */
+  .loading-overlay {
+    position: fixed; inset: 0; z-index: 9999;
+    background-color: #1a2622;
+    background-image:
+      radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.04) 0%, transparent 60%),
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.015) 0 1px, transparent 1px 3px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.012) 0 1px, transparent 1px 4px);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    overflow: hidden;
+    animation: loading-fade-out 0.4s 2.4s forwards;
+  }
+  .loading-overlay.skipped { animation: loading-fade-out 0.2s forwards; }
+
+  @keyframes loading-fade-out {
+    0% { opacity: 1; }
+    100% { opacity: 0; visibility: hidden; pointer-events: none; }
+  }
+
+  .loading-numbers {
+    position: relative;
+    width: min(60vw, 280px);
+    height: min(60vw, 280px);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .loading-numbers .number {
+    position: absolute;
+    font-family: "Klee One", "Shippori Mincho B1", serif;
+    font-weight: 600;
+    font-size: clamp(80px, 18vw, 160px);
+    color: #f0efe5;
+    text-shadow:
+      0 0 2px rgba(240,239,229,0.5),
+      1px 0 0 rgba(255,255,255,0.15),
+      0 1px 0 rgba(0,0,0,0.3);
+    letter-spacing: 0.03em;
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+    filter: blur(0.3px);
+  }
+  @keyframes chalk-write-long {
+    0%   { opacity: 0;   clip-path: inset(0 100% 0 0); transform: scale(0.96); }
+    25%  { opacity: 1;   clip-path: inset(0 0% 0 0);   transform: scale(1); }
+    78%  { opacity: 1; }
+    100% { opacity: 0;   transform: scale(1); }
+  }
+  @keyframes chalk-flash {
+    0%   { opacity: 0; clip-path: inset(0 100% 0 0); }
+    50%  { opacity: 1; clip-path: inset(0 0 0 0); }
+    100% { opacity: 0; clip-path: inset(0 0 0 0); }
+  }
+  .loading-numbers .number:nth-child(1) { animation: chalk-write-long 0.8s 0.1s ease-out forwards; }
+  .loading-numbers .number:nth-child(2) { animation: chalk-flash 0.22s 0.95s ease-out forwards; }
+  .loading-numbers .number:nth-child(3) { animation: chalk-flash 0.22s 1.18s ease-out forwards; }
+  .loading-numbers .number:nth-child(4) { animation: chalk-flash 0.22s 1.41s ease-out forwards; }
+  .loading-numbers .number:nth-child(5) { animation: chalk-flash 0.22s 1.64s ease-out forwards; }
+
+  .loading-x {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(70vw, 340px);
+    height: min(70vw, 340px);
+    opacity: 0;
+    animation: loading-x-show 0s 1.92s forwards;
+  }
+  @keyframes loading-x-show { 100% { opacity: 1; } }
+  .loading-x svg { width: 100%; height: 100%; }
+  .loading-x line {
+    stroke: #f0efe5;
+    stroke-width: 7;
+    stroke-linecap: round;
+    fill: none;
+    filter: drop-shadow(0 0 2px rgba(240,239,229,0.5));
+    stroke-dasharray: 200;
+    stroke-dashoffset: 200;
+  }
+  .loading-x .x-line-1 { animation: x-draw 0.18s 1.92s cubic-bezier(0.7, 0, 0.3, 1) forwards; }
+  .loading-x .x-line-2 { animation: x-draw 0.18s 2.12s cubic-bezier(0.7, 0, 0.3, 1) forwards; }
+  @keyframes x-draw { to { stroke-dashoffset: 0; } }
+
+  /* 黒板の上から赤と青の幕が降りる → 左右に剥がれて消える */
+  .loading-split { position: absolute; inset: 0; display: flex; pointer-events: none; }
+  .loading-split > div {
+    flex: 1; height: 100%;
+    transform: translateX(0);
+    opacity: 0;
+  }
+  .loading-split .split-red {
+    background: linear-gradient(135deg, #c8102e 0%, #5a0512 100%);
+    animation: split-show 0.05s 2.3s forwards, split-out-left 0.35s 2.35s cubic-bezier(0.7, 0, 0.4, 1) forwards;
+  }
+  .loading-split .split-blue {
+    background: linear-gradient(225deg, #1d3a8a 0%, #0a1a4a 100%);
+    animation: split-show 0.05s 2.3s forwards, split-out-right 0.35s 2.35s cubic-bezier(0.7, 0, 0.4, 1) forwards;
+  }
+  @keyframes split-show { to { opacity: 1; } }
+  @keyframes split-out-left  { to { transform: translateX(-101%); } }
+  @keyframes split-out-right { to { transform: translateX(101%); } }
+
+  /* ローディング中は body スクロールを止める */
+  body.loading-active { overflow: hidden; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .loading-overlay { display: none !important; }
+  }
   .kv-hero {
     position: relative;
     aspect-ratio: 16 / 9;
@@ -465,6 +575,29 @@
 </style>
 </head>
 <body>
+
+<!-- =========================================== -->
+<!-- ローディング演出（黒板にチョークで番号呼出 → × → 赤青分割） -->
+<!-- =========================================== -->
+<div id="loading" class="loading-overlay" aria-hidden="true">
+  <div class="loading-numbers">
+    <span class="number">07</span>
+    <span class="number">14</span>
+    <span class="number">23</span>
+    <span class="number">41</span>
+    <span class="number">56</span>
+  </div>
+  <div class="loading-x">
+    <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+      <line class="x-line-1" x1="22" y1="22" x2="78" y2="78"/>
+      <line class="x-line-2" x1="78" y1="22" x2="22" y2="78"/>
+    </svg>
+  </div>
+  <div class="loading-split">
+    <div class="split-red"></div>
+    <div class="split-blue"></div>
+  </div>
+</div>
 
 <!-- =========================================== -->
 <!-- 0. ナビゲーション -->
@@ -798,6 +931,39 @@
   }
   refreshVoteCounts();
   setInterval(refreshVoteCounts, VOTE_CONFIG.POLL_MS);
+
+  // ============================================================
+  // ローディング演出のスキップ＆キャッシュ制御
+  // ============================================================
+  (function () {
+    const loader = document.getElementById("loading");
+    if (!loader) return;
+
+    // 30分以内に見た訪問者はスキップ（しつこくしない）
+    const SKIP_KEY = "deathclass_loading_seen";
+    const SKIP_TTL = 30 * 60 * 1000;
+    try {
+      const last = parseInt(localStorage.getItem(SKIP_KEY) || "0", 10);
+      if (last && Date.now() - last < SKIP_TTL) {
+        loader.style.display = "none";
+        return;
+      }
+      localStorage.setItem(SKIP_KEY, String(Date.now()));
+    } catch (e) { /* localStorage 不可環境は無視 */ }
+
+    document.body.classList.add("loading-active");
+
+    // タップ・クリックで即スキップ
+    loader.addEventListener("click", () => loader.classList.add("skipped"), { once: true });
+
+    // アニメ完了でスクロール解放＆DOMから削除
+    setTimeout(() => {
+      document.body.classList.remove("loading-active");
+    }, 2500);
+    setTimeout(() => {
+      loader.remove();
+    }, 3200);
+  })();
 </script>
 
 <!-- =========================================== -->
