@@ -941,17 +941,15 @@
     const loader = document.getElementById("loading");
     if (!loader) return;
 
-    // 30分以内に見た訪問者はスキップ（しつこくしない）
+    // セッション内（同タブ）の再表示はスキップ。タブを開き直したら再度表示
     const SKIP_KEY = "deathclass_loading_seen";
-    const SKIP_TTL = 30 * 60 * 1000;
     try {
-      const last = parseInt(localStorage.getItem(SKIP_KEY) || "0", 10);
-      if (last && Date.now() - last < SKIP_TTL) {
+      if (sessionStorage.getItem(SKIP_KEY)) {
         loader.style.display = "none";
         return;
       }
-      localStorage.setItem(SKIP_KEY, String(Date.now()));
-    } catch (e) { /* localStorage 不可環境は無視 */ }
+      sessionStorage.setItem(SKIP_KEY, "1");
+    } catch (e) { /* sessionStorage 不可環境は無視 */ }
 
     document.body.classList.add("loading-active");
 
