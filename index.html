@@ -6,15 +6,27 @@
 <title>DEATH CLASS — IMMERSIVE LAB × NASU UTOPIA</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Noto+Serif+JP:wght@400;500;700;900&family=Shippori+Mincho+B1:wght@400;500;700;800&family=Shippori+Mincho:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    font-family: "Inter", "Noto Sans JP", -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Hiragino Sans", sans-serif;
+    font-family: "Shippori Mincho", "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", serif;
     color: #1a1a1a;
     background: #0a0a0a;
-    line-height: 1.7;
+    line-height: 1.85;
     -webkit-font-smoothing: antialiased;
+    letter-spacing: 0.02em;
+  }
+  /* 英字タイトル用：石碑のように荘厳なローマンセリフ */
+  .font-display {
+    font-family: "Cinzel", "Noto Serif JP", serif;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+  }
+  /* 日本語見出し用：太い明朝でおどろおどろしさ */
+  .font-heading-jp {
+    font-family: "Shippori Mincho B1", "Noto Serif JP", "Hiragino Mincho ProN", serif;
+    font-weight: 800;
   }
   /* Wireframe annotations — hidden in production view */
   .wf-note, .wf-section-label { display: none; }
@@ -60,17 +72,26 @@
   .ph.sq { aspect-ratio: 1 / 1; }
   .ph.tall { aspect-ratio: 3 / 4; }
   .ph.wide { aspect-ratio: 21 / 9; }
-  h1 { font-size: 32px; margin-bottom: 16px; font-weight: 900; letter-spacing: 0.02em; }
+  h1 {
+    font-size: 32px; margin-bottom: 16px;
+    font-family: "Shippori Mincho B1", "Noto Serif JP", serif;
+    font-weight: 800; letter-spacing: 0.05em;
+  }
   h2 {
     font-size: clamp(22px, 2.6vw, 32px);
     margin-bottom: 16px;
     border-left: 4px solid #1a1a1a;
     padding-left: 14px;
-    font-weight: 900;
-    letter-spacing: 0.02em;
-    line-height: 1.4;
+    font-family: "Shippori Mincho B1", "Noto Serif JP", serif;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    line-height: 1.5;
   }
-  h3 { font-size: 17px; margin-bottom: 10px; font-weight: 700; letter-spacing: 0.02em; }
+  h3 {
+    font-size: 17px; margin-bottom: 10px;
+    font-family: "Shippori Mincho B1", "Noto Serif JP", serif;
+    font-weight: 700; letter-spacing: 0.04em;
+  }
   p { margin-bottom: 10px; font-size: 15px; }
   .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; }
   .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
@@ -110,9 +131,9 @@
     font-size: clamp(48px, 8vw, 96px);
     font-weight: 900;
     margin: 24px 0;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.15em;
     color: #1a1a1a;
-    font-family: "Inter", sans-serif;
+    font-family: "Cinzel", "Noto Serif JP", serif;
   }
   .btn {
     display: inline-block; padding: 14px 32px; font-weight: 700;
@@ -197,8 +218,10 @@
     padding: 14px 28px;
     display: flex; justify-content: space-between; align-items: center;
     position: sticky; top: 0; z-index: 100; font-size: 13px;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.1em;
+    font-family: "Cinzel", "Noto Serif JP", serif;
   }
+  .nav strong { font-weight: 900; letter-spacing: 0.18em; }
   .nav ul { list-style: none; display: flex; gap: 24px; }
   .nav a { color: #fff; text-decoration: none; transition: opacity 0.2s; }
   .nav a:hover { opacity: 0.6; }
@@ -216,7 +239,10 @@
     text-align: center; font-size: 12px;
     letter-spacing: 0.05em;
   }
-  footer p strong { color: #fff; font-size: 18px; letter-spacing: 0.15em; font-weight: 900; }
+  footer p strong {
+    color: #fff; font-size: 18px; letter-spacing: 0.2em; font-weight: 900;
+    font-family: "Cinzel", "Noto Serif JP", serif;
+  }
   .note-list { font-size: 14px; color: #444; margin-top: 12px; line-height: 1.9; }
   .note-list li { margin-left: 22px; margin-bottom: 8px; }
   .timeline { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
@@ -274,9 +300,10 @@
     white-space: nowrap;
   }
   .kv-title {
+    font-family: "Cinzel", "Noto Serif JP", serif;
     font-size: clamp(24px, 4vw, 52px);
     font-weight: 900;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.1em;
     line-height: 1;
     margin: 0;
     text-shadow: 0 2px 14px rgba(0,0,0,0.7);
@@ -332,9 +359,10 @@
     white-space: nowrap;
   }
   .hero-fv .hero-title {
+    font-family: "Cinzel", "Noto Serif JP", serif;
     font-size: clamp(32px, 5.5vw, 80px);
     font-weight: 900;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.12em;
     line-height: 1;
     margin: 0;
     text-shadow: 0 2px 18px rgba(0,0,0,0.7);
