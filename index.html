@@ -877,8 +877,8 @@
     </p>
 
     <div class="vote-bar" id="vote-bar">
-      <div class="red-fill" id="bar-red">サバイバル ／ 赤 &nbsp;&nbsp; - %</div>
-      <div class="blue-fill" id="bar-blue">- % &nbsp;&nbsp; 物語没入 ／ 青</div>
+      <div class="red-fill" id="bar-red">- %</div>
+      <div class="blue-fill" id="bar-blue">- %</div>
     </div>
     <p style="font-size:12px; color:#aaa; margin-top:6px; letter-spacing:0.05em;">※ 集計はリアルタイム更新（最大30秒のラグ）</p>
 
@@ -1021,8 +1021,8 @@
       if (barRed && barBlue) {
         barRed.style.flex  = String(red  || 0.5);
         barBlue.style.flex = String(blue || 0.5);
-        barRed.textContent  = `サバイバル ／ 赤  ${redPct}% (${red}票)`;
-        barBlue.textContent = `(${blue}票) ${bluePct}%  物語没入 ／ 青`;
+        barRed.textContent  = `${redPct}% (${red}票)`;
+        barBlue.textContent = `(${blue}票) ${bluePct}%`;
       }
     } catch (err) {
       console.warn("[vote] 集計取得に失敗:", err);
