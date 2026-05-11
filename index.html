@@ -212,6 +212,124 @@
   @media (max-width: 768px) {
     .vote-actions { grid-template-columns: 1fr; }
   }
+  /* 階段招待キャンペーン */
+  .invite-campaign {
+    margin-top: 32px;
+    padding: 32px 28px;
+    background: linear-gradient(135deg, #1a1612 0%, #0d0a08 100%);
+    border: 1px solid #c8a960;
+    box-shadow: inset 0 0 40px rgba(200,169,96,0.06);
+  }
+  .invite-campaign-label {
+    font-family: "Cinzel", serif;
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    color: #c8a960;
+    margin-bottom: 16px;
+  }
+  .invite-campaign h3 {
+    font-size: 24px;
+    color: #fff;
+    line-height: 1.6;
+    margin: 0;
+    border: none;
+    padding: 0;
+  }
+  .invite-campaign-sub {
+    color: #c8a960;
+    font-size: 15px;
+    margin-top: 8px;
+    letter-spacing: 0.04em;
+  }
+  .invite-tiers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 24px;
+  }
+  .invite-tier {
+    padding: 18px 12px;
+    background: #000;
+    border: 1px solid #555;
+    text-align: center;
+  }
+  .invite-tier-2 { border-color: #888; }
+  .invite-tier-3 {
+    border-color: #c8a960;
+    box-shadow: inset 0 0 24px rgba(200,169,96,0.15);
+  }
+  .invite-tier-label {
+    font-family: "Cinzel", serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: #888;
+    margin: 0;
+  }
+  .invite-tier-2 .invite-tier-label { color: #bbb; }
+  .invite-tier-3 .invite-tier-label { color: #c8a960; }
+  .invite-tier-vote {
+    font-family: "Cinzel", serif;
+    font-size: 24px;
+    color: #fff;
+    margin: 8px 0 0 0;
+    font-weight: 700;
+  }
+  .invite-tier-vote-unit {
+    font-size: 13px;
+    color: #888;
+    margin-left: 2px;
+  }
+  .invite-tier-prize {
+    font-size: 13px;
+    color: #c8a960;
+    margin-top: 10px;
+  }
+  .invite-note {
+    font-size: 13px;
+    color: #bbb;
+    margin-top: 20px;
+    line-height: 1.8;
+  }
+  .invite-note strong {
+    color: #fff;
+  }
+  .benefit-section {
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid #2a2620;
+  }
+  .benefit-section:first-of-type {
+    border-top: none;
+    padding-top: 0;
+    margin-top: 24px;
+  }
+  .benefit-section-tag {
+    font-family: "Cinzel", serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: #c8a960;
+    margin: 0 0 12px 0;
+  }
+  .benefit-section-title {
+    font-family: "Shippori Mincho B1", "Noto Serif JP", serif;
+    font-weight: 800;
+    font-size: 19px;
+    color: #fff;
+    margin: 0 0 12px 0;
+    line-height: 1.5;
+  }
+  .benefit-section-desc {
+    font-size: 13px;
+    color: #ccc;
+    line-height: 1.8;
+    margin: 0;
+  }
+  .benefit-section-desc strong {
+    color: #fff;
+  }
+  @media (max-width: 768px) {
+    .invite-tiers { grid-template-columns: 1fr; }
+  }
   .nav {
     background: rgba(10,10,10,0.95);
     backdrop-filter: blur(12px);
@@ -882,6 +1000,48 @@
     </div>
     <p style="font-size:12px; color:#aaa; margin-top:6px; letter-spacing:0.05em;">※ 集計はリアルタイム更新（最大30秒のラグ）</p>
 
+    <!-- 階段招待キャンペーン -->
+    <div class="invite-campaign">
+      <p class="invite-campaign-label">CAMPAIGN — INVITATION</p>
+      <h3 class="font-heading-jp">勝者陣営の投票者には、2つの特典。</h3>
+      <p class="invite-campaign-sub">結果発表の先行案内 + 抽選で無料招待。</p>
+
+      <div class="benefit-section">
+        <p class="benefit-section-tag">特典 1 / 投票者全員へ</p>
+        <p class="benefit-section-title">投票者全員に、先行案内。</p>
+        <p class="benefit-section-desc">A案・B案、どちらに投票してくださった方にも、<strong>2026年6月4日 19:00</strong> に先行案内をメールでお届けします。一般販売（<strong>2026年6月8日 19:00</strong>）前に、最速で勝者の席を取れます。</p>
+      </div>
+
+      <div class="benefit-section">
+        <p class="benefit-section-tag">特典 2 / 抽選で無料招待</p>
+        <p class="benefit-section-title">票が伸びるほど、招待枠も増える。</p>
+        <div class="invite-tiers">
+          <div class="invite-tier">
+            <p class="invite-tier-label">TIER 1</p>
+            <p class="invite-tier-vote">500<span class="invite-tier-vote-unit">票</span></p>
+            <p class="invite-tier-prize">1組 2名 招待</p>
+          </div>
+          <div class="invite-tier invite-tier-2">
+            <p class="invite-tier-label">TIER 2</p>
+            <p class="invite-tier-vote">1,000<span class="invite-tier-vote-unit">票</span></p>
+            <p class="invite-tier-prize">3組 6名 招待</p>
+          </div>
+          <div class="invite-tier invite-tier-3">
+            <p class="invite-tier-label">TIER 3</p>
+            <p class="invite-tier-vote">1,500<span class="invite-tier-vote-unit">票</span></p>
+            <p class="invite-tier-prize">5組 10名 招待</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="invite-note">
+        <strong>上記の票数は、勝者陣営に投票された数のみカウントします。</strong><br>
+        勝者陣営に投票された方の中から、抽選で当選者を決定します。<br>
+        当選人数は、勝者陣営の最終票数に応じて確定します。<br>
+        <strong>当選者には、2026年6月2日 19:00 までにメールでご連絡します。</strong>
+      </p>
+    </div>
+
     <div class="vote-actions">
       <a class="vote-action vote-red" data-vote="red" href="#">
         <span class="vote-action-label">A案 / サバイバルゲーム</span>
@@ -891,15 +1051,6 @@
         <span class="vote-action-label">B案 / 物語没入体験</span>
         <span class="vote-action-cta">青に投票する ▶</span>
       </a>
-    </div>
-
-    <div style="margin-top:24px; padding:24px; background:#1a1a1a; border:1px solid #333;">
-      <p style="color:#fff; font-weight:bold; font-size:15px; line-height:1.9;">
-        ・5月末までの投票で多い方を開校<br>
-        ・ただし両案とも100名以上の得票が必要<br>
-        ・条件未達なら、今回は両案とも開校見送り
-      </p>
-      <p style="color:#aaa; font-size:13px; margin-top:14px; letter-spacing:0.05em;">真剣勝負としてあなたの一票を投じてください。</p>
     </div>
   </div>
 </section>
@@ -964,6 +1115,7 @@
   <h2 style="margin-top:20px;">よくある質問</h2>
   <ul class="note-list" style="font-size:14px;">
     <li><strong>Q. 投票期間と決定条件は？</strong><br>A. 投票期間は〜2026年5月31日。投票が多かった案を開校します。ただし、両案とも100名以上の得票がなければ、今回はどちらも開催見送りです。</li>
+    <li><strong>Q. 投票者向けの特典は？</strong><br>A. 2つあります。<br>（1）<strong>先行案内</strong>：A案・B案どちらに投票してくださった方にも、2026年6月4日 19:00 に先行案内をメールでお届けします。一般販売（2026年6月8日 19:00）前に席を確保できます。<br>（2）<strong>抽選で無料招待</strong>：勝者陣営の投票者の中から抽選で無料招待。当選人数は勝者陣営の最終票数で拡大：500票で1組2名、1,000票で3組6名、1,500票で5組10名。当選者には2026年6月2日 19:00 までにメールでご連絡します。</li>
     <li><strong>Q. 投票は本当に開催決定に反映されますか？</strong><br>A. はい。条件を満たせば、得票上位の案をそのまま正式実施します。真剣勝負としてあなたの一票を投じてください。</li>
     <li><strong>Q. 負けた案も後日やりますか？</strong><br>A. 今回は見送りです。次回以降の企画は未定です。</li>
     <li><strong>Q. どちらにも投票できますか？</strong><br>A. お一人一票です。どちらかを選んでください。</li>
